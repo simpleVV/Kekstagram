@@ -1,3 +1,5 @@
-import { mockData } from './mock-data.js';
+import './create-picture.js';
+import './big-picture.js';
 
-console.log(mockData);
+
+

@@ -69,8 +69,8 @@ const createPictureData = (number) => {
   };
 };
 
-const mockData = new Array(NUMBER_OF_PHOTOS)
+const createPicturesData = () => new Array(NUMBER_OF_PHOTOS)
   .fill(createPictureData)
   .map((element, index) => element(index + 1));
 
-export { mockData };
+export { createPicturesData };

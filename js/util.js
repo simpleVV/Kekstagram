@@ -6,4 +6,10 @@ const checkMaxStringLength = (string, maxLength) =>
 
 const getRandomArrayElement = (arr) => arr[getRandomNumber(arr.length)];
 
+// const renderElement = (element, parent) => {
+//   const fragment = document.createDocumentFragment();
+//   fragment.appendChild(element);
+//   parent.appendChild(fragment)
+// };
+
 export { getRandomNumber, checkMaxStringLength, getRandomArrayElement };
