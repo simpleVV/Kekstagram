@@ -6,10 +6,21 @@ const checkMaxStringLength = (string, maxLength) =>
 
 const getRandomArrayElement = (arr) => arr[getRandomNumber(arr.length)];
 
-// const renderElement = (element, parent) => {
-//   const fragment = document.createDocumentFragment();
-//   fragment.appendChild(element);
-//   parent.appendChild(fragment)
-// };
+const renderElements = (elements, parent) => {
+  const fragment = document.createDocumentFragment();
 
-export { getRandomNumber, checkMaxStringLength, getRandomArrayElement };
+  elements.forEach((element) => {
+    fragment.appendChild(element);
+  });
+  parent.appendChild(fragment)
+};
+
+const checkIsEscEventDone = (evt) => evt.key === ('Escape' || 'Esc');
+
+export {
+  getRandomNumber,
+  checkMaxStringLength,
+  getRandomArrayElement,
+  renderElements,
+  checkIsEscEventDone
+};
