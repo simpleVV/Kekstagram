@@ -43,8 +43,7 @@ const getRandomMessage = (arr) =>
     ? getRandomArrayElement(arr) + ' ' + getRandomArrayElement(arr)
     : getRandomArrayElement(arr);
 
-
-const getPhotoComments = () => {
+const getPhotoCommentData = () => {
   let uniqueId = [];
   return {
     id: getUniqueId(uniqueId, MAX_ID_NUM),
@@ -65,7 +64,7 @@ const createPictureData = (number) => {
     likes: getRandomNumber(MAX_LIKES_NUM, MIN_LIKES_NUM),
     comments: new Array(getRandomNumber(MAX_COMMENTS))
       .fill(null)
-      .map(() => getPhotoComments()),
+      .map(() => getPhotoCommentData()),
   };
 };
 

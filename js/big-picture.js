@@ -1,31 +1,58 @@
+import { renderElements, checkIsEscEventDone } from './util.js';
+
 const body = document.querySelector('body');
-const bigPicture = document.querySelector('.big-picture');
-const socialComment = document.querySelector('.social__comment');
+const bigPicture = body.querySelector('.big-picture');
+const socialComment = bigPicture.querySelector('.social__comment');
+const pictureCancelButton = bigPicture.querySelector('.big-picture__cancel');
 
-
-bigPicture.classList.remove('hidden');
-body.classList.add('modal-open');
-
-const createPictureComment = (commentData) => {
+const createPictureComment = ({avatar, message}) => {
   const comment = socialComment.cloneNode(true);
-  const commentPicture = comment.querySelector('.social__picture');
-  const commentText = comment.querySelector('.social__text');
 
-  // const
+  comment.querySelector('.social__picture').src = avatar;
+  comment.querySelector('.social__text').textContent = message;
+
+  return comment;
 };
 
-const showPicturePreview = ({url, likes, comments}) => {
-  const pictureImg = bigPicture.querySelector('img');
-  const likesCount = bigPicture.querySelector('.likes-count');
+const onPreviewEscPress = (evt) => {
+  if (checkIsEscEventDone(evt)) {
+    evt.preventDefault();
+    closePicturePreview();
+  }
+};
+
+const onCancelButtonClick = (evt) => {
+  evt.preventDefault();
+  closePicturePreview();
+}
+
+const closePicturePreview = () => {
+  bigPicture.classList.add('hidden');
+  body.classList.remove('modal-open');
+
+  pictureCancelButton.removeEventListener('keydown', onPreviewEscPress);
+  pictureCancelButton.removeEventListener('click', onCancelButtonClick);
+};
+
+const openPicturePreview = ({ url, likes, comments }) => {
   const commentsCount = bigPicture.querySelector('.comments-count');
   const socialComments = bigPicture.querySelector('.social__comments');
+  const commentElements = comments.map((comment) =>
+    createPictureComment(comment));
 
-  // const pi
-
-  pictureImg.src = url;
-  likesCount.textContent = likes;
+  body.classList.add('modal-open');
+  bigPicture.classList.remove('hidden');
+  bigPicture.querySelector('img').src = url;
+  bigPicture.querySelector('.likes-count').textContent = likes;
   commentsCount.textContent = comments.length;
   socialComments.innerHTML = '';
+
+  pictureCancelButton.addEventListener('click', closePicturePreview);
+  document.addEventListener('keydown', onPreviewEscPress);
+
+  renderElements(commentElements, socialComments);
 };
 
-export { showPicturePreview };
+
+
+export { openPicturePreview };
