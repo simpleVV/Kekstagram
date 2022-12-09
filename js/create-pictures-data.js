@@ -1,4 +1,4 @@
-import { getRandomNumber, getRandomArrayElement } from './utils.js'
+import { getRandomNumber, getRandomArrayElement } from './util.js';
 
 const MAX_ID_NUM = 500;
 const LAST_AVATAR_NUM = 6;
@@ -26,7 +26,15 @@ const MOCK_MESSAGES = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент!?',
 ];
 
-const AUTHORS = ['Боб', 'Олег', 'Хуан', 'Ольга', 'Голум', 'Брунгильда', 'Сварлос'];
+const AUTHORS = [
+  'Боб',
+  'Олег',
+  'Хуан',
+  'Ольга',
+  'Голум',
+  'Брунгильда',
+  'Сварлос',
+];
 
 let uniqueId = [];
 
@@ -68,10 +76,9 @@ const createPictureData = (number) => {
   };
 };
 
-const createPicturesData = () => new Array(NUMBER_OF_PHOTOS)
-  .fill(createPictureData)
-  .map((createPicture, index) => createPicture(index + 1));
+const createPicturesData = () =>
+  new Array(NUMBER_OF_PHOTOS)
+    .fill(createPictureData)
+    .map((createPicture, index) => createPicture(index + 1));
 
-const PhotoData = createPicturesData();
-
-export { PhotoData };
+export { createPicturesData };
