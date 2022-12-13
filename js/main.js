@@ -1,2 +1,2 @@
-// import { createPicturesData } from './photo-data.js';
+import './photo-list.js';
 
