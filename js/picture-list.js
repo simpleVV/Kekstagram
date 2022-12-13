@@ -1,4 +1,4 @@
-import { createPhotoArrayData } from './data.js';
+import { createPicturesData } from './data.js';
 import { renderElements, openPopup } from './util.js';
 // import { bigPicture, createPicturePreview } from './big-picture.js';
 // import { loadData } from './backend.js';
@@ -27,7 +27,7 @@ const createPicture = ( {url, likes, comments, description} ) => {
   return picture;
 }
 
-const picturesData = createPhotoArrayData();
+const picturesData = createPicturesData();
 const pictureElements = picturesData.map((picture) => createPicture(picture));
 
 renderElements(pictureElements, picturesContainer);

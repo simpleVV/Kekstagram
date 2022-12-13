@@ -64,7 +64,7 @@ const createPhotoComment = () => {
   };
 };
 
-const createPhotoData = (number) => {
+const createPictureData = (number) => {
   return {
     id: number,
     url: `photos/${number}.jpg`,
@@ -76,9 +76,9 @@ const createPhotoData = (number) => {
   };
 };
 
-const createPhotoArrayData = () =>
+const createPicturesData = () =>
   new Array(NUMBER_OF_PHOTOS)
-    .fill(createPhotoData)
-    .map((createPhoto, index) => createPhoto(index + 1));
+    .fill(createPictureData)
+    .map((createPicture, index) => createPicture(index + 1));
 
-export { createPhotoArrayData };
+export { createPicturesData };
