@@ -1,2 +1,2 @@
-import './photo-list.js';
+import './gallery.js';
 
