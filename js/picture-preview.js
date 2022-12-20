@@ -34,7 +34,7 @@ const onCancelButtonClick = (evt) => {
   closePicturePreview();
 };
 
-const renderPicturePreview = (url, likes, comments, description) => {
+const renderPicturePreview = ({ url, likes, comments, description }) => {
   const socialComments = picturePreview.querySelector('.social__comments');
   const commentList = comments.map((comment) =>
     createPictureComment(comment));

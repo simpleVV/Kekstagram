@@ -45,6 +45,8 @@ const closePopup = (popup) => {
   body.classList.remove('modal-open');
 };
 
+const formatValueToPersent = (value) => `${parseInt(value, 10)}%`;
+
 export {
   getRandomNumber,
   getRandomArrayElement,
@@ -54,5 +56,6 @@ export {
   checkIsEscEvent,
   checkIsEnterEvent,
   openPopup,
-  closePopup
+  closePopup,
+  formatValueToPersent
 }
