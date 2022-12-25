@@ -1,22 +1,24 @@
-import { formatValueToPersent } from './util.js';
+const MAX_VALUE = 100;
 
-const SIZE_STEP = 25;
-const MAX_SIZE = 100;
-
-const setPictureSize = (picture, value = MAX_SIZE) => {
-  picture.style.transform = `scale(${value / MAX_SIZE})`;
+const setPictureSize = (picture, value = MAX_VALUE) => {
+  picture.style.transform = `scale(${parseInt(value, 10) / MAX_VALUE})`;
 };
 
-const increaseSizeValue = (value) => value === MAX_SIZE
-  ? formatValueToPersent(value)
-  : formatValueToPersent(value + SIZE_STEP);
+const changePictureSize = (value, step, maxSize, minSize) => {
+  let result = value + step;
 
-const reduceSizeValue = (value) => value === SIZE_STEP
-  ? formatValueToPersent(value)
-  : formatValueToPersent(value - SIZE_STEP);
+  if (result >= maxSize) {
+    result = maxSize;
+  }
+
+  if (result <= minSize) {
+    result = minSize;
+  }
+
+  return `${parseInt(result, 10)}%`;
+};
 
 export {
   setPictureSize,
-  reduceSizeValue,
-  increaseSizeValue
-};
+  changePictureSize
+}

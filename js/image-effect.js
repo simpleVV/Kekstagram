@@ -3,9 +3,9 @@ const setImageEffectClass = (image, effect) => {
 };
 
 const removeImageEffects = (image) => image.classList = '';
+const setDefaultEffect = (image) => image.style.filter = 'none';
 const setImageDefaultClass = (image) =>
   image.classList.add('effects__preview--none');
-const setDefaultEffect = (image) => image.style.filter = 'none';
 
 const setEffect = (image, effect, value) => {
   switch (effect) {

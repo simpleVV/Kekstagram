@@ -1,3 +1,3 @@
 import './gallery.js';
-import './upload-picture.js';
-
+import './upload-image.js';
+import './form-validation.js';

@@ -1,8 +1,3 @@
-const slider = document.querySelector('.effect-level__slider');
-const noUiSlider = window.noUiSlider;
-const DEFAULT_MAX_VALUE = 100;
-const DEFAULT_MIN_VALUE = 0;
-const DEFAULT_STEP = 1;
 const SEPIA_MAX_VALUE = 1;
 const SEPIA_MIN_VALUE = 0;
 const EFFECT_STEP = 0.1;
@@ -10,13 +5,33 @@ const HEAT_MAX_VALUE = 3;
 const HEAT_MIN_VALUE = 1;
 const PHOBOS_MAX_VALUE = 3;
 
+const Slider = {
+  MAX: 100,
+  MIN: 0,
+  STEP: 1,
+}
+
+const slider = document.querySelector('.effect-level__slider');
+const noUiSlider = window.noUiSlider;
+
 noUiSlider.create(slider, {
   range: {
-    min: DEFAULT_MIN_VALUE,
-    max: DEFAULT_MAX_VALUE,
+    min: Slider.MIN,
+    max: Slider.MAX,
   },
-  start: DEFAULT_MAX_VALUE,
-  step: DEFAULT_STEP,
+  start: Slider.MAX,
+  step: Slider.STEP,
+  format: {
+    to: (value) => {
+      if (Number.isInteger(value)) {
+        return value.toFixed(0);
+      }
+      return value.toFixed(1);
+    },
+    from: (value) => {
+      return parseFloat(value);
+    },
+  },
   connect: 'lower',
 });
 
@@ -36,17 +51,17 @@ const setSliderSettings = (effect) => {
     case 'marvin':
       slider.noUiSlider.updateOptions({
         range: {
-          min: DEFAULT_MIN_VALUE,
-          max: DEFAULT_MAX_VALUE,
+          min: Slider.MIN,
+          max: Slider.MAX,
         },
-        start: DEFAULT_MAX_VALUE,
-        step: DEFAULT_STEP,
+        start: Slider.MAX,
+        step: Slider.STEP,
       });
       break;
     case 'phobos':
       slider.noUiSlider.updateOptions({
         range: {
-          min: DEFAULT_MIN_VALUE,
+          min: Slider.MIN,
           max: PHOBOS_MAX_VALUE,
         },
         start: PHOBOS_MAX_VALUE,
@@ -65,7 +80,7 @@ const setSliderSettings = (effect) => {
       break;
     default:
       slider.noUiSlider.updateOptions({
-        start: DEFAULT_MIN_VALUE,
+        start: Slider.MIN,
       });
       break;
   }

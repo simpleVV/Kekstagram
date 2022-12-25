@@ -9,8 +9,7 @@ import {
 } from './util.js';
 import {
   setPictureSize,
-  reduceSizeValue,
-  increaseSizeValue
+  changePictureSize
 } from './resize-image.js';
 import {
   setImageEffectClass,
@@ -19,40 +18,40 @@ import {
   setDefaultEffect,
   setEffect
 } from './image-effect.js';
-// import {
-//   uploadData
-// } from './backend.js';
-// import { onSendError } from './error.js';
 
-const imageUpload = document.querySelector('.img-upload__overlay');
-const reduceSizeButton = imageUpload.querySelector('.scale__control--smaller');
-const increaseSizeButton = imageUpload.querySelector('.scale__control--bigger');
-const scaleControlValue = imageUpload.querySelector('.scale__control--value');
-const imgUploadPreview = imageUpload.querySelector('.img-upload__preview');
-const uploadImage = imgUploadPreview.querySelector('img');
-
-const setDefaultScaleControl = () => scaleControlValue.value = '100%';
-
-//Action with picture size
-const onReduceSizeButtonClick = (evt) => {
-  evt.preventDefault();
-  scaleControlValue.value =
-    reduceSizeValue(parseInt(scaleControlValue.value, 10));
-
-  setPictureSize(uploadImage, parseInt(scaleControlValue.value, 10));
+const Scale = {
+  MAX: 100,
+  MIN: 25,
+  STEP: 25,
 };
 
-const onIncreaseSizeButtonClick = (evt) => {
-  evt.preventDefault();
-  scaleControlValue.value =
-    increaseSizeValue(parseInt(scaleControlValue.value, 10));
+const imageUpload = document.querySelector('.img-upload__overlay');
+const imgUploadPreview = imageUpload.querySelector('.img-upload__preview');
+const uploadImage = imgUploadPreview.querySelector('img');
+const scale = imageUpload.querySelector('.scale');
+const scaleControl = imageUpload.querySelector('.scale__control--value');
 
-  setPictureSize(uploadImage, parseInt(scaleControlValue.value, 10));
+const setDefaultScaleControl = () => scaleControl.value = '100%';
+
+//Actions with size
+const onScaleClick = (evt) => {
+  evt.preventDefault();
+  let scaleValue = parseInt(scaleControl.value, 10);
+  
+  if (evt.target.matches('.scale__control--bigger')) {
+    scaleControl.value = changePictureSize(scaleValue, Scale.STEP, Scale.MAX, Scale.MIN);
+  }
+
+  if (evt.target.matches('.scale__control--smaller')) {
+    scaleControl.value = changePictureSize(scaleValue, -Scale.STEP, Scale.MAX, Scale.MIN);
+  }
+  
+  setPictureSize(uploadImage, scaleControl.value);
 };
 
 //Actions with effects
 const effectList = imageUpload.querySelector('.effects__list');
-const effectLevel = imageUpload.querySelectorAll('.effect-level__value');
+const effectLevel = imageUpload.querySelector('.effect-level__value');
 const imageEffectLevel = imageUpload.querySelector('.effect-level');
 let imageEffect = '';
 
@@ -64,7 +63,7 @@ const hideImageEffectLevel = () => {
 
 slider.noUiSlider.on('update', (values, handle) => {
   effectLevel.value = values[handle];
-  setEffect(uploadImage, imageEffect ,values[handle]);
+  setEffect(uploadImage, imageEffect, values[handle]);
 });
 
 const onEffectListChecked = (evt) => {
@@ -81,37 +80,36 @@ const onEffectListChecked = (evt) => {
 //Actions with upload popup
 const uploadInput = document.querySelector('#upload-file');
 const uploadCancelButton = imageUpload.querySelector('.img-upload__cancel');
+const defaultEffectRadio = imageUpload.querySelector('#effect-none');
 
 const setDefaultSettigs = () => {
-  setDefaultScaleControl();
   setDefaultEffect(uploadImage);
   removeImageEffects(uploadImage);
   setImageDefaultClass(uploadImage);
   setPictureSize(uploadImage);
   hideImageEffectLevel();
   uploadInput.value = '';
+  defaultEffectRadio.checked = true;
 };
 
 const closeImgUpload = () => {
+  setDefaultSettigs();
   closePopup(imageUpload);
-
   uploadCancelButton.removeEventListener('click', onCancelButtonClick);
   document.removeEventListener('keydown', onImgUploadEscPress);
-  reduceSizeButton.removeEventListener('click', onReduceSizeButtonClick);
-  increaseSizeButton.removeEventListener('click', onIncreaseSizeButtonClick);
   effectList.removeEventListener('change', onEffectListChecked);
+  scale.removeEventListener('click', onScaleClick);
 };
 
 const onUploadInputChange = (evt) => {
   evt.preventDefault();
-  setDefaultSettigs();
+  setDefaultScaleControl();
   openPopup(imageUpload);
-
+  
   uploadCancelButton.addEventListener('click', onCancelButtonClick);
   document.addEventListener('keydown', onImgUploadEscPress);
-  reduceSizeButton.addEventListener('click', onReduceSizeButtonClick);
-  increaseSizeButton.addEventListener('click', onIncreaseSizeButtonClick);
   effectList.addEventListener('change', onEffectListChecked);
+  scale.addEventListener('click', onScaleClick);
 };
 
 const onImgUploadEscPress  = (evt) => {
@@ -127,17 +125,6 @@ const onCancelButtonClick = (evt) => {
 };
 
 uploadInput.addEventListener('change', onUploadInputChange);
-
-// const uploadForm = document.querySelector('.img-upload__form');
-
-// const onUploadFormSubmit = (evt) => {
-//   evt.preventDefault();
-
-//   uploadData(new FormData(uploadForm), closeImgUpload, onSendError);
-// };
-
-// uploadForm.addEventListener('submit', onUploadFormSubmit);
-
 
 
 

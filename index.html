@@ -55,6 +55,7 @@
             </h2>
             <form
               class="img-upload__form"
+              action="https://23.javascript.pages.academy/kekstagram"
               id="upload-select-image"
               method="post"
               enctype="multipart/form-data"
@@ -118,6 +119,7 @@
                         class="effect-level__value"
                         type="number"
                         name="effect-level"
+                        step="0.1"
                         value=""
                       />
                       <div class="effect-level__slider"></div>
@@ -237,6 +239,7 @@
                   <fieldset class="img-upload__text text">
                     <input
                       class="text__hashtags"
+                      type="text"
                       name="hashtags"
                       placeholder="#ХэшТег"
                     />
@@ -244,6 +247,7 @@
                       class="text__description"
                       name="description"
                       placeholder="Ваш комментарий..."
+                      maxlength="140"
                     ></textarea>
                   </fieldset>
 

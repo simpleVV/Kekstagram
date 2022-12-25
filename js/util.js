@@ -1,3 +1,9 @@
+const Keys = {
+  ESC: 'Esc',
+  ESCAPE: 'Escape',
+  ENTER: 'Enter',
+};
+
 const getRandomNumber = (max, min = 0) => {
   if (min < 0 || max < 0) {
     return -1;
@@ -32,8 +38,8 @@ const renderElement = (element, parent = body) => {
   parent.appendChild(fragment);
 };
 
-const checkIsEscEvent = (evt) => evt.key === ('Escape' || 'Esc');
-const checkIsEnterEvent = (evt) => evt.key === ('Enter');
+const checkIsEscEvent = (evt) => (evt.key === Keys.ESCAPE || evt.key === Keys.ESC);
+const checkIsEnterEvent = (evt) => evt.key === Keys.ENTER;
 
 const openPopup = (popup) => {
   popup.classList.remove('hidden');
@@ -45,8 +51,6 @@ const closePopup = (popup) => {
   body.classList.remove('modal-open');
 };
 
-const formatValueToPersent = (value) => `${parseInt(value, 10)}%`;
-
 export {
   getRandomNumber,
   getRandomArrayElement,
@@ -56,6 +60,5 @@ export {
   checkIsEscEvent,
   checkIsEnterEvent,
   openPopup,
-  closePopup,
-  formatValueToPersent
+  closePopup
 }
