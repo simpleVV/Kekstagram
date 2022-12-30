@@ -1,12 +1,12 @@
 import {
-  slider,
-  setSliderSettings
-} from './slider.js';
-import {
   openPopup,
   closePopup,
   checkIsEscEvent
 } from './util.js';
+import {
+  slider,
+  setSliderSettings
+} from './slider.js';
 import {
   setPictureSize,
   changePictureSize
@@ -18,6 +18,12 @@ import {
   setDefaultEffect,
   setEffect
 } from './image-effect.js';
+import { 
+  showModalWindow,
+  successModal,
+  errorModal 
+} from './modal.js';
+import { sendData } from './api.js';
 
 const Scale = {
   MAX: 100,
@@ -31,13 +37,11 @@ const uploadImage = imgUploadPreview.querySelector('img');
 const scale = imageUpload.querySelector('.scale');
 const scaleControl = imageUpload.querySelector('.scale__control--value');
 
-const setDefaultScaleControl = () => scaleControl.value = '100%';
-
 //Actions with size
 const onScaleClick = (evt) => {
   evt.preventDefault();
   let scaleValue = parseInt(scaleControl.value, 10);
-  
+
   if (evt.target.matches('.scale__control--bigger')) {
     scaleControl.value = changePictureSize(scaleValue, Scale.STEP, Scale.MAX, Scale.MIN);
   }
@@ -45,7 +49,7 @@ const onScaleClick = (evt) => {
   if (evt.target.matches('.scale__control--smaller')) {
     scaleControl.value = changePictureSize(scaleValue, -Scale.STEP, Scale.MAX, Scale.MIN);
   }
-  
+
   setPictureSize(uploadImage, scaleControl.value);
 };
 
@@ -80,7 +84,7 @@ const onEffectListChecked = (evt) => {
 //Actions with upload popup
 const uploadInput = document.querySelector('#upload-file');
 const uploadCancelButton = imageUpload.querySelector('.img-upload__cancel');
-const defaultEffectRadio = imageUpload.querySelector('#effect-none');
+const uploadForm = document.querySelector('.img-upload__form');
 
 const setDefaultSettigs = () => {
   setDefaultEffect(uploadImage);
@@ -88,8 +92,7 @@ const setDefaultSettigs = () => {
   setImageDefaultClass(uploadImage);
   setPictureSize(uploadImage);
   hideImageEffectLevel();
-  uploadInput.value = '';
-  defaultEffectRadio.checked = true;
+  uploadForm.reset();
 };
 
 const closeImgUpload = () => {
@@ -103,9 +106,9 @@ const closeImgUpload = () => {
 
 const onUploadInputChange = (evt) => {
   evt.preventDefault();
-  setDefaultScaleControl();
+  scaleControl.value = '100%';
   openPopup(imageUpload);
-  
+
   uploadCancelButton.addEventListener('click', onCancelButtonClick);
   document.addEventListener('keydown', onImgUploadEscPress);
   effectList.addEventListener('change', onEffectListChecked);
@@ -124,7 +127,24 @@ const onCancelButtonClick = (evt) => {
   closeImgUpload();
 };
 
+const onSuccessSubmit = () => {
+  showModalWindow(successModal);
+};
+
+const onErrorSubmit = () => {
+  showModalWindow(errorModal);
+};
+
+uploadForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  
+  sendData(onSuccessSubmit, onErrorSubmit, new FormData(evt.target));
+  closeImgUpload();
+});
+
 uploadInput.addEventListener('change', onUploadInputChange);
+
+
 
 
 

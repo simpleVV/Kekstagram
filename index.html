@@ -55,7 +55,7 @@
             </h2>
             <form
               class="img-upload__form"
-              action="https://23.javascript.pages.academy/kekstagram"
+              action="https://23.javascript.pages.academy/kekstagram "
               id="upload-select-image"
               method="post"
               enctype="multipart/form-data"
@@ -446,6 +446,19 @@
           <button type="button" class="error__button">
             Загрузить другой файл
           </button>
+        </div>
+      </section>
+    </template>
+
+    <!-- Сообщение с ошибкой отправки или получения данных -->
+    <template id="server-error">
+      <section class="error error--server">
+        <div class="error__inner">
+          <h2 class="error__code">404</h2>
+          <p class="error__message">Not Found</p>
+          <p class="error__text">
+            Что-то пошло не так. Пожалуйста, повторите попытку позже
+          </p>
         </div>
       </section>
     </template>
