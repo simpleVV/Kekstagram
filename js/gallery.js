@@ -2,21 +2,21 @@ import {
   renderElements,
   openPopup
 } from './util.js';
-import { createPicture } from './create-picture.js';
 import {
   picturePreview,
-  renderPicturePreview
+  renderPicturePreview,
+  pictureCancelButton
 } from './picture-preview.js';
+import { createPicture } from './create-picture.js';
 
 const picturesContainer = document.querySelector('.pictures');
-const commentInput = document.querySelector('.social__footer-text');
 
 const onPictureClick = (pictureData) => {
   return (evt) => {
     evt.preventDefault();
     renderPicturePreview(pictureData);
     openPopup(picturePreview);
-    commentInput.focus();
+    pictureCancelButton.focus();
   };
 };
 
@@ -30,7 +30,15 @@ const fillGallery = (picturesData) => {
   renderElements(pictureList, picturesContainer);
 };
 
-export { fillGallery };
+const clearGallery = () => {
+  const pictures = document.querySelectorAll('.picture');
+  pictures.forEach((picture) => picturesContainer.removeChild(picture))
+};
+
+export {
+  fillGallery,
+  clearGallery
+};
 
 
 // Делегирование событий на родителя

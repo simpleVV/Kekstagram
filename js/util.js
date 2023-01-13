@@ -51,6 +51,20 @@ const closePopup = (popup) => {
   body.classList.remove('modal-open');
 };
 
+const debounce = (cb, time) => {
+  let timeout;
+
+  return (...args) => {
+    const cbCall = () => {
+      cb.apply(this, args);
+    }
+
+    clearTimeout(timeout);
+
+    timeout = setTimeout(cbCall, time);
+  };
+};
+
 export {
   getRandomNumber,
   getRandomArrayElement,
@@ -60,5 +74,6 @@ export {
   checkIsEscEvent,
   checkIsEnterEvent,
   openPopup,
-  closePopup
+  closePopup,
+  debounce
 }

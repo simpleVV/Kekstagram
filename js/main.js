@@ -2,10 +2,30 @@ import './gallery.js';
 import './upload-image.js';
 import './form-validation.js';
 import { getData } from './api.js';
-import { fillGallery } from './gallery.js';
+import { debounce } from './util.js'
 import { showServerError } from './modal.js';
+import {
+  fillGallery,
+  clearGallery
+} from './gallery.js';
+import {
+  showFilters,
+  setFilterClick
+} from './filters.js';
 
-getData(fillGallery, showServerError);
+const FILTER_DELAY = 500;
 
+getData(
+  (pictures) => {
+    showFilters();
+    fillGallery(pictures);
+    setFilterClick(
+      pictures,
+      // clearGallery,
+      debounce(clearGallery, FILTER_DELAY),
+      debounce(fillGallery, FILTER_DELAY))
+  },
+  showServerError,
+);
 
 

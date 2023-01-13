@@ -48,11 +48,14 @@ const renderPicturePreview = ({ url, likes, comments, description }) => {
   //Временно
   picturePreview.querySelector('.social__comment-count').classList.add('hidden');
   picturePreview.querySelector('.comments-loader').classList.add('hidden');
-
   pictureCancelButton.addEventListener('click', onCancelButtonClick);
   document.addEventListener('keydown', onPreviewEscPress);
 
   renderElements(commentList, socialComments);
 };
 
-export { picturePreview, renderPicturePreview };
+export {
+  picturePreview,
+  renderPicturePreview,
+  pictureCancelButton
+};
