@@ -21,11 +21,8 @@ getData(
     fillGallery(pictures);
     setFilterClick(
       pictures,
-      // clearGallery,
       debounce(clearGallery, FILTER_DELAY),
       debounce(fillGallery, FILTER_DELAY))
   },
   showServerError,
 );
-
-

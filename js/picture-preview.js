@@ -1,8 +1,41 @@
 import { renderElements, checkIsEscEvent, closePopup } from './util.js';
 
+const MAX_ADD_COMMENT = 5;
+let commentList;
+let currentComments;
+let lastCommentNum;
+
 const picturePreview = document.querySelector('.big-picture');
 const socialComment = picturePreview.querySelector('.social__comment');
-const pictureCancelButton = picturePreview.querySelector('.big-picture__cancel');
+const cancelButton = picturePreview.querySelector('.big-picture__cancel');
+const loaderButton = picturePreview.querySelector('.comments-loader');
+const socialComments = picturePreview.querySelector('.social__comments');
+const commentsCount = picturePreview.querySelector('.social__comment-count');
+
+const countNextPosition = (comments, currentLength, count) => {
+  if (currentLength >= comments.length) {
+    return currentLength;
+  }
+
+  const diff = (currentLength + count) - comments.length;
+
+  return (currentLength + count > comments.length)
+    ? currentLength + count - diff
+    : currentLength + count;
+};
+
+const hideLoaderButton = (current, total) => {
+  current !== total
+    ? loaderButton.classList.remove('hidden')
+    : loaderButton.classList.add('hidden');
+};
+
+const setCurrentCommentsCount = (current, total) => {
+  commentsCount.innerHTML =
+      `${current} из
+        <span class="comments-count">${total}</span>
+      комментариев`;
+};
 
 const createPictureComment = ({avatar, name, message}) => {
   const comment = socialComment.cloneNode(true);
@@ -19,7 +52,17 @@ const createPictureComment = ({avatar, name, message}) => {
 const closePicturePreview = () => {
   closePopup(picturePreview);
   document.removeEventListener('keydown', onPreviewEscPress);
-  pictureCancelButton.removeEventListener('click', onCancelButtonClick);
+  cancelButton.removeEventListener('click', onCancelButtonClick);
+  loaderButton.removeEventListener('click', onLoaderButtonClick);
+};
+
+const renderNextComments = () => {
+  let nextComments = commentList.slice(lastCommentNum, lastCommentNum + MAX_ADD_COMMENT);
+
+  lastCommentNum = countNextPosition(commentList, lastCommentNum, MAX_ADD_COMMENT);
+
+  setCurrentCommentsCount(lastCommentNum, commentList.length);
+  renderElements(nextComments, socialComments);
 };
 
 const onPreviewEscPress = (evt) => {
@@ -34,28 +77,33 @@ const onCancelButtonClick = (evt) => {
   closePicturePreview();
 };
 
-const renderPicturePreview = ({ url, likes, comments, description }) => {
-  const socialComments = picturePreview.querySelector('.social__comments');
-  const commentList = comments.map((comment) =>
-    createPictureComment(comment));
+const onLoaderButtonClick = (evt) => {
+  evt.preventDefault();
+  renderNextComments();
+  hideLoaderButton(lastCommentNum, commentList.length);
+};
+
+const showPicturePreview = ({ url, likes, comments, description }) => {
+  commentList = comments.map((comment) => createPictureComment(comment));
+  currentComments = commentList.slice(0, MAX_ADD_COMMENT);
+  lastCommentNum = currentComments.length;
 
   picturePreview.querySelector('img').src = url;
   picturePreview.querySelector('.likes-count').textContent = likes;
-  picturePreview.querySelector('.comments-count').textContent = comments.length;
   picturePreview.querySelector('.social__caption').textContent = description;
+
   socialComments.innerHTML = '';
+  setCurrentCommentsCount(lastCommentNum, commentList.length);
+  renderElements(currentComments, socialComments);
+  hideLoaderButton(lastCommentNum, commentList.length);
 
-  //Временно
-  picturePreview.querySelector('.social__comment-count').classList.add('hidden');
-  picturePreview.querySelector('.comments-loader').classList.add('hidden');
-  pictureCancelButton.addEventListener('click', onCancelButtonClick);
+  cancelButton.addEventListener('click', onCancelButtonClick);
   document.addEventListener('keydown', onPreviewEscPress);
-
-  renderElements(commentList, socialComments);
+  loaderButton.addEventListener('click', onLoaderButtonClick);
 };
 
 export {
   picturePreview,
-  renderPicturePreview,
-  pictureCancelButton
+  showPicturePreview,
+  cancelButton
 };

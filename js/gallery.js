@@ -4,8 +4,8 @@ import {
 } from './util.js';
 import {
   picturePreview,
-  renderPicturePreview,
-  pictureCancelButton
+  showPicturePreview,
+  cancelButton
 } from './picture-preview.js';
 import { createPicture } from './create-picture.js';
 
@@ -14,20 +14,20 @@ const picturesContainer = document.querySelector('.pictures');
 const onPictureClick = (pictureData) => {
   return (evt) => {
     evt.preventDefault();
-    renderPicturePreview(pictureData);
+    showPicturePreview(pictureData);
     openPopup(picturePreview);
-    pictureCancelButton.focus();
+    cancelButton.focus();
   };
 };
 
 const fillGallery = (picturesData) => {
   const pictureList = picturesData.map((picture) => createPicture(picture));
 
+  renderElements(pictureList, picturesContainer);
+
   pictureList.forEach((picture, index) => {
     picture.addEventListener('click', onPictureClick(picturesData[index]));
   });
-
-  renderElements(pictureList, picturesContainer);
 };
 
 const clearGallery = () => {

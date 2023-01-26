@@ -31,7 +31,7 @@ const sortImgsForComment = (imgA, imgB) => {
   return imgB.comments.length - imgA.comments.length;
 };
 
-const getDiscussedImages = (images) => {
+const getSortImages = (images) => {
   const discussedImgs = images
     .slice()
     .sort(sortImgsForComment);
@@ -47,7 +47,7 @@ const setFilter = (filter, filterData) => {
     case 'filter-random':
       return getRandomImgs(data);
     case 'filter-discussed':
-      return getDiscussedImages(data);
+      return getSortImages(data);
   }
 };
 
