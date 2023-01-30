@@ -18,17 +18,22 @@ import {
   setDefaultEffect,
   setEffect
 } from './image-effect.js';
-import { 
+import {
   showModalWindow,
   successModal,
-  errorModal 
+  errorModal
 } from './modal.js';
 import { sendData } from './api.js';
 
+const FILE_TYPES = ['image/jpg', 'image/jpeg', 'image/png'];
 const Scale = {
   MAX: 100,
   MIN: 25,
   STEP: 25,
+};
+const PictureSize = {
+  WIDTH: 600,
+  HEIGHT: 600,
 };
 
 const imageUpload = document.querySelector('.img-upload__overlay');
@@ -85,6 +90,7 @@ const onEffectListChecked = (evt) => {
 const uploadInput = document.querySelector('#upload-file');
 const uploadCancelButton = imageUpload.querySelector('.img-upload__cancel');
 const uploadForm = document.querySelector('.img-upload__form');
+const effectsPreview = imageUpload.querySelectorAll('.effects__preview');
 
 const setDefaultSettigs = () => {
   setDefaultEffect(uploadImage);
@@ -93,6 +99,26 @@ const setDefaultSettigs = () => {
   setPictureSize(uploadImage);
   hideImageEffectLevel();
   uploadForm.reset();
+};
+
+const loadImage = () => {
+  const imageFile = uploadInput.files[0];
+  const matches = FILE_TYPES.some((type) => type === imageFile.type);
+
+  if (matches) {
+    const reader = new FileReader();
+
+    reader.addEventListener('load', () => {
+      uploadImage.width = PictureSize.WIDTH;
+      uploadImage.height = PictureSize.HEIGHT;
+      uploadImage.src = reader.result;
+      effectsPreview.forEach((effect) => {
+        effect.style.backgroundImage = `url(${reader.result})`;
+      });
+    });
+
+    reader.readAsDataURL(imageFile);
+  }
 };
 
 const closeImgUpload = () => {
@@ -108,6 +134,7 @@ const onUploadInputChange = (evt) => {
   evt.preventDefault();
   scaleControl.value = '100%';
   openPopup(imageUpload);
+  loadImage();
 
   uploadCancelButton.addEventListener('click', onCancelButtonClick);
   document.addEventListener('keydown', onImgUploadEscPress);
@@ -137,12 +164,14 @@ const onErrorSubmit = () => {
 
 uploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
-  
+
   sendData(onSuccessSubmit, onErrorSubmit, new FormData(evt.target));
   closeImgUpload();
 });
 
 uploadInput.addEventListener('change', onUploadInputChange);
+
+
 
 
 
