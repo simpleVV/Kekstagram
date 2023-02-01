@@ -1,3 +1,6 @@
+import noUiSlider from 'nouislider';
+import 'nouislider/dist/nouislider.css';
+
 const SEPIA_MAX_VALUE = 1;
 const SEPIA_MIN_VALUE = 0;
 const EFFECT_STEP = 0.1;
@@ -12,7 +15,6 @@ const Slider = {
 }
 
 const slider = document.querySelector('.effect-level__slider');
-const noUiSlider = window.noUiSlider;
 
 noUiSlider.create(slider, {
   range: {

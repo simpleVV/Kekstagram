@@ -14,6 +14,7 @@ import {
 } from './filters.js';
 
 const FILTER_DELAY = 500;
+const REMOVE_PHOTO_DELAY = 400;
 
 getData(
   (pictures) => {
@@ -21,7 +22,7 @@ getData(
     fillGallery(pictures);
     setFilterClick(
       pictures,
-      debounce(clearGallery, FILTER_DELAY),
+      debounce(clearGallery, REMOVE_PHOTO_DELAY),
       debounce(fillGallery, FILTER_DELAY))
   },
   showServerError,

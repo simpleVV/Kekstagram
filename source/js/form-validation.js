@@ -1,7 +1,7 @@
 import { checkIsEscEvent } from './util.js';
 
 const REG_WHITESPACE = /\b#/;
-const REG_WITHOUT_SPECIAL = /^#[A-Za-z0-9]*$/;
+const REG_WITHOUT_SPECIAL = /^#[A-Za-zА-ЯЁа-яё0-9]*$/;
 const MAX_SIMILAR_HASHTAG = 1;
 const MAX_HASHTAGS_NUMBER = 5;
 const MAX_HASHTAG_LENGTH = 20;
@@ -26,16 +26,16 @@ const removeErrorBorder = (inputElement) => {
 const validateHashtag = (value) => {
   if (value === '#') {
     return 'Хэш-тег не может состоять из #';
-  } 
+  }
 
   if (REG_WHITESPACE.test(value)) {
     return 'Хэш-теги разделяются пробелами';
-  } 
-  
+  }
+
   if (value && !REG_WITHOUT_SPECIAL.test(value)) {
     return 'Хэш-тег должен начинатся с # и не может содержать спецсимволы'
-  } 
-  
+  }
+
   if (value.length > MAX_HASHTAG_LENGTH) {
     return 'Максимальная длина одного хэш-тега 20 символов';
   }
@@ -61,7 +61,7 @@ const onHashtagInput = () => {
       messages[index] = 'Можно указать не более 5 хэш-тегов';
     }
   });
-  
+
   let errorMessage = messages.find((message) => message ? message : '');
 
   errorMessage ? hashtagInput.setCustomValidity(errorMessage) : hashtagInput.setCustomValidity('')

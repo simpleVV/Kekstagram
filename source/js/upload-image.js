@@ -97,7 +97,7 @@ const setDefaultSettigs = () => {
   removeImageEffects(uploadImage);
   setImageDefaultClass(uploadImage);
   setPictureSize(uploadImage);
-  hideImageEffectLevel();
+  // hideImageEffectLevel();
   uploadForm.reset();
 };
 
@@ -136,6 +136,7 @@ const onUploadInputChange = (evt) => {
   openPopup(imageUpload);
   loadImage();
 
+  imageEffectLevel.classList.add('visually-hidden');
   uploadCancelButton.addEventListener('click', onCancelButtonClick);
   document.addEventListener('keydown', onImgUploadEscPress);
   effectList.addEventListener('change', onEffectListChecked);
