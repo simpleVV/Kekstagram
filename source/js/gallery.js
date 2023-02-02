@@ -32,7 +32,7 @@ const fillGallery = (picturesData) => {
 
 const clearGallery = () => {
   const pictures = document.querySelectorAll('.picture');
-  pictures.forEach((picture) => picturesContainer.removeChild(picture))
+  pictures.forEach((picture) => picturesContainer.removeChild(picture));
 };
 
 export {

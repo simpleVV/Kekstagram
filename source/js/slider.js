@@ -4,15 +4,13 @@ import 'nouislider/dist/nouislider.css';
 const SEPIA_MAX_VALUE = 1;
 const SEPIA_MIN_VALUE = 0;
 const EFFECT_STEP = 0.1;
-const HEAT_MAX_VALUE = 3;
-const HEAT_MIN_VALUE = 1;
 const PHOBOS_MAX_VALUE = 3;
 
 const Slider = {
   MAX: 100,
   MIN: 0,
   STEP: 1,
-}
+};
 
 const slider = document.querySelector('.effect-level__slider');
 
@@ -61,22 +59,13 @@ const setSliderSettings = (effect) => {
       });
       break;
     case 'phobos':
+    case 'heat':
       slider.noUiSlider.updateOptions({
         range: {
           min: Slider.MIN,
           max: PHOBOS_MAX_VALUE,
         },
         start: PHOBOS_MAX_VALUE,
-        step: EFFECT_STEP,
-      });
-      break;
-    case 'heat':
-      slider.noUiSlider.updateOptions({
-        range: {
-          min: HEAT_MIN_VALUE,
-          max: HEAT_MAX_VALUE,
-        },
-        start: HEAT_MAX_VALUE,
         step: EFFECT_STEP,
       });
       break;
@@ -91,4 +80,4 @@ const setSliderSettings = (effect) => {
 export {
   slider,
   setSliderSettings
-}
+};

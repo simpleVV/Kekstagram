@@ -17,7 +17,6 @@ const getRandomNumber = (max, min = 0) => {
 };
 
 const getRandomArrayElement = (arr) => arr[getRandomNumber(arr.length - 1)];
-
 const checkMaxStringLength = (string, maxLength) => string.length <= maxLength;
 
 const body = document.querySelector('body');
@@ -28,7 +27,7 @@ const renderElements = (elements, parent = body) => {
   elements.forEach((element) => {
     fragment.appendChild(element);
   });
-  parent.appendChild(fragment)
+  parent.appendChild(fragment);
 };
 
 const renderElement = (element, parent = body) => {
@@ -38,7 +37,8 @@ const renderElement = (element, parent = body) => {
   parent.appendChild(fragment);
 };
 
-const checkIsEscEvent = (evt) => (evt.key === Keys.ESCAPE || evt.key === Keys.ESC);
+const checkIsEscEvent = (evt) =>
+  (evt.key === Keys.ESCAPE || evt.key === Keys.ESC);
 const checkIsEnterEvent = (evt) => evt.key === Keys.ENTER;
 
 const openPopup = (popup) => {
@@ -76,4 +76,4 @@ export {
   openPopup,
   closePopup,
   debounce
-}
+};

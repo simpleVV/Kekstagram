@@ -1,5 +1,5 @@
 const setImageEffectClass = (image, effect) => {
-  image.classList.add(`effects__preview--${effect}`)
+  image.classList.add(`effects__preview--${effect}`);
 };
 
 const removeImageEffects = (image) => image.classList = '';

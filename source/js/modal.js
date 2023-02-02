@@ -26,7 +26,7 @@ const showServerError = (errorStatus, message) => {
 
   setTimeout(() => {
     closePopup(errorPopup);
-  }, ERROR_SHOW_TIME)
+  }, ERROR_SHOW_TIME);
 };
 
 //Send data success and error modal
@@ -37,7 +37,7 @@ const errorPopupTemplate = document.querySelector('#error')
 
 const createModalWindow = (template) => {
   const modalWindow = template.cloneNode(true);
- 
+
   modalWindow.classList.add('hidden');
   renderElement(modalWindow);
 

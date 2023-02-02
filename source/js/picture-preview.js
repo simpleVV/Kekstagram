@@ -1,6 +1,11 @@
-import { renderElements, checkIsEscEvent, closePopup } from './util.js';
+import {
+  renderElements,
+  checkIsEscEvent,
+  closePopup
+} from './util.js';
 
 const MAX_ADD_COMMENT = 5;
+
 let commentList;
 let currentComments;
 let lastCommentNum;
@@ -49,13 +54,6 @@ const createPictureComment = ({avatar, name, message}) => {
   return comment;
 };
 
-const closePicturePreview = () => {
-  closePopup(picturePreview);
-  document.removeEventListener('keydown', onPreviewEscPress);
-  cancelButton.removeEventListener('click', onCancelButtonClick);
-  loaderButton.removeEventListener('click', onLoaderButtonClick);
-};
-
 const renderNextComments = () => {
   let nextComments = commentList.slice(lastCommentNum, lastCommentNum + MAX_ADD_COMMENT);
 
@@ -63,6 +61,13 @@ const renderNextComments = () => {
 
   setCurrentCommentsCount(lastCommentNum, commentList.length);
   renderElements(nextComments, socialComments);
+};
+
+const closePicturePreview = () => {
+  closePopup(picturePreview);
+  document.removeEventListener('keydown', onPreviewEscPress);
+  cancelButton.removeEventListener('click', onCancelButtonClick);
+  loaderButton.removeEventListener('click', onLoaderButtonClick);
 };
 
 const onPreviewEscPress = (evt) => {

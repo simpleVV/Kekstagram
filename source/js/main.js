@@ -2,7 +2,7 @@ import './gallery.js';
 import './upload-image.js';
 import './form-validation.js';
 import { getData } from './api.js';
-import { debounce } from './util.js'
+import { debounce } from './util.js';
 import { showServerError } from './modal.js';
 import {
   fillGallery,

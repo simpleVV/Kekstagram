@@ -9,19 +9,13 @@ const MAX_HASHTAG_LENGTH = 20;
 const hashtagInput = document.querySelector('.text__hashtags');
 const description = document.querySelector('.text__description');
 
-const onInputKeydown = (evt) => {
-  if (checkIsEscEvent(evt)) {
-    evt.stopPropagation();
-  }
-};
-
 const addErrorBorder = (inputElement) => {
   inputElement.style.borderColor = '#e90000';
 };
 
 const removeErrorBorder = (inputElement) => {
   inputElement.style.borderColor = '';
-}
+};
 
 const validateHashtag = (value) => {
   if (value === '#') {
@@ -41,6 +35,12 @@ const validateHashtag = (value) => {
   }
 
   return '';
+};
+
+const onInputKeydown = (evt) => {
+  if (checkIsEscEvent(evt)) {
+    evt.stopPropagation();
+  }
 };
 
 const onHashtagInput = () => {
@@ -64,7 +64,9 @@ const onHashtagInput = () => {
 
   let errorMessage = messages.find((message) => message ? message : '');
 
-  errorMessage ? hashtagInput.setCustomValidity(errorMessage) : hashtagInput.setCustomValidity('')
+  errorMessage
+    ? hashtagInput.setCustomValidity(errorMessage)
+    : hashtagInput.setCustomValidity('');
 
   hashtagInput.validity.valid === true
     ? removeErrorBorder(hashtagInput)
